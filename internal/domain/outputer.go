@@ -1,5 +1,5 @@
 package domain
 
 type GameOutputer interface {
-	ShowGame(game Game)
+	ShowGame(game *Game)
 }
