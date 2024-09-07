@@ -1,4 +1,4 @@
-package application
+package domain
 
 type Game struct {
 	attempts int
@@ -36,4 +36,12 @@ func (g *Game) GetPattern() string {
 		}
 	}
 	return pattern
+}
+
+func (g *Game) Guess(letter rune) bool {
+	return false
+}
+
+func (g *Game) IsFinished() bool {
+	return false
 }
