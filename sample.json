@@ -1,0 +1,18 @@
+{
+    "creator": "makly",
+    "description": "This is the main file that demonstrates the layout of JSON file",
+    "categories": [
+        {
+            "name": "Furniture",
+            "easy": [
+                "sofa"
+            ],
+            "medium": [
+                "wardrobe"
+            ],
+            "hard": [
+                "sideboard"
+            ]
+        }
+    ]
+}

@@ -1,3 +1,3 @@
-module github.com/es-debug/backend-academy-2024-go-template
+module makly/hangman
 
 go 1.22.6
