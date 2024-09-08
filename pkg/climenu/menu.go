@@ -14,15 +14,15 @@ type Menu struct {
 
 type MenuItem string
 
-func NewMenu(userMessage string, position int) *Menu {
+func NewMenu(userMessage string) *Menu {
 	return &Menu{
 		userMessage: userMessage,
-		position:    position,
+		position:    0,
 		menuItems:   make([]MenuItem, 0),
 	}
 }
 
-func (m *Menu) AddItem(tag, label string) {
+func (m *Menu) AddItem(label string) {
 	m.menuItems = append(m.menuItems, MenuItem(label))
 }
 
@@ -36,18 +36,19 @@ func (m *Menu) moveDown() {
 	m.position = (m.position + len(m.menuItems)) % len(m.menuItems)
 }
 
+func (m *Menu) clearMenu() {
+	fmt.Printf("\033[%dA", len(m.menuItems))
+}
+
 func (m *Menu) drawMenu(redraw bool) {
 	if redraw {
-		fmt.Printf("\033[%dA", len(m.menuItems)-1)
+		m.clearMenu()
 	}
 	for i, item := range m.menuItems {
 		if i == m.position {
-			fmt.Printf("-> %s", item)
+			fmt.Printf("-> %s\n", item)
 		} else {
-			fmt.Printf("   %s", item)
-		}
-		if i < len(m.menuItems)-1 {
-			fmt.Print("\n")
+			fmt.Printf("   %s\n", item)
 		}
 	}
 
@@ -60,6 +61,16 @@ func (m *Menu) RunMenu() (chosenIndex int) {
 	defer func() {
 		_ = keyboard.Close()
 	}()
+
+	fmt.Printf("\033[?25l")
+	defer fmt.Printf("\033[?25h")
+
+	fmt.Printf("\0337")
+	defer func() {
+		fmt.Printf("\0338")
+		fmt.Printf("\033[K")
+	}()
+
 	fmt.Printf("%s\n", m.userMessage)
 	fmt.Printf("Use the arrow keys to navigate and press Enter to select\n")
 	fmt.Printf("Press ESC to exit\n")
