@@ -27,15 +27,34 @@ func NewGame(word Word) *Game {
 	}
 }
 
-func (g *Game) GetAttempts() int {
+func (g *Game) Attempts() int {
 	return g.attempts
 }
 
-func (g *Game) GetMistakes() int {
+func (g *Game) Mistakes() int {
 	return g.mistakes
 }
 
-func (g *Game) GetPattern() string {
+func (g *Game) State() State {
+	switch g.mistakes {
+	case 1:
+		return Head
+	case 2:
+		return Body
+	case 3:
+		return LeftArm
+	case 4:
+		return RightArm
+	case 5:
+		return LeftLeg
+	case 6:
+		return RightLeg
+	default:
+		return Initial
+	}
+}
+
+func (g *Game) Pattern() string {
 	pattern := ""
 	for _, letter := range g.word.Word {
 		if g.used[letter] && g.correctLetters[letter] {
