@@ -36,6 +36,23 @@ func (m *Menu) moveDown() {
 	m.position = (m.position + len(m.menuItems)) % len(m.menuItems)
 }
 
+func (m *Menu) drawMenu(redraw bool) {
+	if redraw {
+		fmt.Printf("\033[%dA", len(m.menuItems)-1)
+	}
+	for i, item := range m.menuItems {
+		if i == m.position {
+			fmt.Printf("-> %s", item)
+		} else {
+			fmt.Printf("   %s", item)
+		}
+		if i < len(m.menuItems)-1 {
+			fmt.Print("\n")
+		}
+	}
+
+}
+
 func (m *Menu) RunMenu() (chosenIndex int) {
 	if err := keyboard.Open(); err != nil {
 		panic(err)
@@ -46,6 +63,7 @@ func (m *Menu) RunMenu() (chosenIndex int) {
 	fmt.Printf("%s\n", m.userMessage)
 	fmt.Printf("Use the arrow keys to navigate and press Enter to select\n")
 	fmt.Printf("Press ESC to exit\n")
+	m.drawMenu(false)
 
 	for {
 		_, key, err := keyboard.GetKey()
@@ -62,5 +80,6 @@ func (m *Menu) RunMenu() (chosenIndex int) {
 		case keyboard.KeyEsc:
 			return -1
 		}
+		m.drawMenu(true)
 	}
 }
