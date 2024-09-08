@@ -12,9 +12,9 @@ func RunGameSession(wordsCollection *domain.WordsCollection, category *domain.Ca
 	word := ChoiceWord(category, difficulty)
 	game := domain.NewGame(word)
 	for !game.IsFinished() {
+		outputer.ShowGame(game)
 		letter := inputer.GetLetter()
 		game.Guess(letter)
-		outputer.ShowGame(game)
 	}
 	outputer.ShowGameResult(game)
 }

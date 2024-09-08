@@ -18,3 +18,11 @@ func (c *ConsoleOutput) ShowGame(game *domain.Game) {
 	c.ShowState(state)
 	fmt.Printf("\n\n%s\n", game.Pattern())
 }
+
+func (c *ConsoleOutput) ShowGameResult(game *domain.Game) {
+	if game.IsWin() {
+		fmt.Println("You won!")
+	} else {
+		fmt.Println("You lost!")
+	}
+}
