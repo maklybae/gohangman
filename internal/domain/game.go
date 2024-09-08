@@ -10,8 +10,12 @@ type Game struct {
 
 func NewGame(word string) *Game {
 	correctLetters := make(map[rune]bool)
+	used := make(map[rune]bool)
 	for _, letter := range word {
 		correctLetters[letter] = true
+		if letter == ' ' {
+			used[letter] = true
+		}
 	}
 
 	return &Game{
@@ -19,7 +23,7 @@ func NewGame(word string) *Game {
 		mistakes:       0,
 		word:           word,
 		correctLetters: correctLetters,
-		used:           make(map[rune]bool),
+		used:           used,
 	}
 }
 
@@ -44,7 +48,7 @@ func (g *Game) GetPattern() string {
 }
 
 func (g *Game) Guess(letter rune) {
-	if g.used[letter] {
+	if g.used[letter] || letter == ' ' {
 		return
 	}
 
