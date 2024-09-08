@@ -5,8 +5,8 @@ import (
 	"math/rand"
 )
 
-func ChoiceWord(category *domain.Category, difficulty domain.Difficulty) string {
-	var words []string
+func ChoiceWord(category *domain.Category, difficulty domain.Difficulty) domain.Word {
+	var words []domain.Word
 	switch difficulty {
 	case domain.EasyDifficulty:
 		words = category.EasyWords
