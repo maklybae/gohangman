@@ -3,15 +3,15 @@ package domain
 type Game struct {
 	attempts       int
 	mistakes       int
-	word           string
+	word           Word
 	correctLetters map[rune]bool
 	used           map[rune]bool
 }
 
-func NewGame(word string) *Game {
+func NewGame(word Word) *Game {
 	correctLetters := make(map[rune]bool)
 	used := make(map[rune]bool)
-	for _, letter := range word {
+	for _, letter := range word.Word {
 		correctLetters[letter] = true
 		if letter == ' ' {
 			used[letter] = true
@@ -37,7 +37,7 @@ func (g *Game) GetMistakes() int {
 
 func (g *Game) GetPattern() string {
 	pattern := ""
-	for _, letter := range g.word {
+	for _, letter := range g.word.Word {
 		if g.used[letter] && g.correctLetters[letter] {
 			pattern += string(letter)
 		} else {
@@ -62,7 +62,7 @@ func (g *Game) Guess(letter rune) {
 }
 
 func (g *Game) IsWin() bool {
-	for _, letter := range g.word {
+	for _, letter := range g.word.Word {
 		if !g.used[letter] {
 			return false
 		}
