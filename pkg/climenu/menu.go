@@ -54,7 +54,7 @@ func (m *Menu) drawMenu(redraw bool) {
 
 }
 
-func (m *Menu) RunMenu() (chosenIndex int) {
+func (m *Menu) RunMenu() (chosenIndex int, err error) {
 	if err := keyboard.Open(); err != nil {
 		panic(err)
 	}
@@ -87,9 +87,9 @@ func (m *Menu) RunMenu() (chosenIndex int) {
 		case keyboard.KeyArrowDown:
 			m.moveDown()
 		case keyboard.KeyEnter:
-			return m.position
+			return m.position, nil
 		case keyboard.KeyEsc:
-			return -1
+			return -1, &ExitError{}
 		}
 		m.drawMenu(true)
 	}
