@@ -6,19 +6,21 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-type Menu struct {
-	userMessage string
-	position    int
-	menuItems   []MenuItem
-}
+const MenuIntroLines = 3
 
 type MenuItem string
 
-func NewMenu(userMessage string) *Menu {
+type Menu struct {
+	oneLineUserMessage string
+	position           int
+	menuItems          []MenuItem
+}
+
+func NewMenu(oneLineUserMessage string) *Menu {
 	return &Menu{
-		userMessage: userMessage,
-		position:    0,
-		menuItems:   make([]MenuItem, 0),
+		oneLineUserMessage: oneLineUserMessage,
+		position:           0,
+		menuItems:          make([]MenuItem, 0),
 	}
 }
 
@@ -36,6 +38,13 @@ func (m *Menu) moveDown() {
 	m.position = (m.position + len(m.menuItems)) % len(m.menuItems)
 }
 
+func (m *Menu) destroyMenu() {
+	for i := 0; i < len(m.menuItems)+MenuIntroLines; i++ {
+		fmt.Printf("\033[1A")
+		fmt.Printf("\033[K")
+	}
+}
+
 func (m *Menu) clearMenu() {
 	fmt.Printf("\033[%dA", len(m.menuItems))
 }
@@ -51,7 +60,6 @@ func (m *Menu) drawMenu(redraw bool) {
 			fmt.Printf("   %s\n", item)
 		}
 	}
-
 }
 
 func (m *Menu) RunMenu() (chosenIndex int, err error) {
@@ -62,16 +70,13 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 		_ = keyboard.Close()
 	}()
 
+	// Hide cursor
 	fmt.Printf("\033[?25l")
 	defer fmt.Printf("\033[?25h")
 
-	fmt.Printf("\0337")
-	defer func() {
-		fmt.Printf("\0338")
-		fmt.Printf("\033[K")
-	}()
+	defer m.destroyMenu()
 
-	fmt.Printf("%s\n", m.userMessage)
+	fmt.Printf("%s\n", m.oneLineUserMessage)
 	fmt.Printf("Use the arrow keys to navigate and press Enter to select\n")
 	fmt.Printf("Press ESC to exit\n")
 	m.drawMenu(false)
