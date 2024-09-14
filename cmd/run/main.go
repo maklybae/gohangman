@@ -2,16 +2,15 @@ package main
 
 import (
 	"makly/hangman/internal/application"
-	"makly/hangman/internal/domain"
 	"makly/hangman/internal/infrastructure"
 )
 
 func main() {
-	consoleInput := &infrastructure.ConsoleInput{}
-	consoleOutput := &infrastructure.ConsoleOutput{}
-	wordsCollection, err := infrastructure.ReadCollectionFromFile("/Users/makly/Programming/tinkoff-backend-academy/backend-academy_2024_project_1-go-maklybae-4/sample.json")
+	wordsCollection, category, difficulty, err := infrastructure.ConsoleGameInit()
 	if err != nil {
-		panic(err)
+		panic(err) // TODO: handle error with logging
 	}
-	application.RunGameSession(wordsCollection, nil, domain.EasyDifficulty, consoleInput, consoleOutput)
+	inputer := infrastructure.NewConsoleInput()
+	outputer := infrastructure.NewConsoleOutput()
+	application.RunGameSession(wordsCollection, category, difficulty, inputer, outputer)
 }

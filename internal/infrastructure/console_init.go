@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"makly/hangman/internal/domain"
 	"makly/hangman/pkg/climenu"
+	"path/filepath"
 )
 
 func InitFlagsParameters() (path string, difficulty domain.Difficulty) {
@@ -38,4 +39,31 @@ func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
 		return nil, fmt.Errorf("choose category: %w", err)
 	}
 	return &categories[chosenIndex], nil
+}
+
+func ConsoleGameInit() (wordsCollection *domain.WordsCollection, category *domain.Category, difficulty domain.Difficulty, err error) {
+	path, difficulty := InitFlagsParameters()
+	if path == "" {
+		path, err = filepath.Abs("../../sample.json")
+		if err != nil {
+			return nil, nil, domain.UnknownDifficulty, fmt.Errorf("get absolute path: %w", err)
+		}
+	}
+
+	wordsCollection, err = ReadCollectionFromFile(path)
+	if err != nil {
+		return nil, nil, domain.UnknownDifficulty, fmt.Errorf("read collection from file: %w", err)
+	}
+
+	if difficulty == domain.UnknownDifficulty {
+		difficulty, err = ChooseDifficulty()
+		if err != nil {
+			return nil, nil, domain.UnknownDifficulty, fmt.Errorf("choose difficulty: %w", err)
+		}
+	}
+	category, err = ChooseCategory(wordsCollection.Categories)
+	if err != nil {
+		return nil, nil, domain.UnknownDifficulty, fmt.Errorf("choose category: %w", err)
+	}
+	return
 }
