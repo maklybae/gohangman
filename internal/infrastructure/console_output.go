@@ -9,6 +9,10 @@ import (
 type ConsoleOutput struct {
 }
 
+func NewConsoleOutput() *ConsoleOutput {
+	return &ConsoleOutput{}
+}
+
 func (c *ConsoleOutput) ShowState(state domain.State) {
 	fmt.Print(draw.StringStates[state])
 }
