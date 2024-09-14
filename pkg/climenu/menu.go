@@ -1,6 +1,7 @@
 package climenu
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/eiannone/keyboard"
@@ -53,6 +54,7 @@ func (m *Menu) drawMenu(redraw bool) {
 	if redraw {
 		m.clearMenu()
 	}
+
 	for i, item := range m.menuItems {
 		if i == m.position {
 			fmt.Printf("-> %s\n", item)
@@ -64,10 +66,18 @@ func (m *Menu) drawMenu(redraw bool) {
 
 func (m *Menu) RunMenu() (chosenIndex int, err error) {
 	if err := keyboard.Open(); err != nil {
-		panic(err)
+		return -1, fmt.Errorf("keyboard open: %w", err)
 	}
+
 	defer func() {
-		_ = keyboard.Close()
+		if closeErr := keyboard.Close(); closeErr != nil {
+			if err != nil {
+				err = errors.Join(err, closeErr)
+				return
+			}
+
+			err = fmt.Errorf("keyboard close: %w", closeErr)
+		}
 	}()
 
 	// Hide cursor
@@ -86,7 +96,8 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 		if err != nil {
 			panic(err)
 		}
-		switch key {
+
+		switch key { //nolint
 		case keyboard.KeyArrowUp:
 			m.moveUp()
 		case keyboard.KeyArrowDown:
@@ -95,7 +106,10 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 			return m.position, nil
 		case keyboard.KeyEsc:
 			return -1, &ExitError{}
+		default:
+			continue
 		}
+
 		m.drawMenu(true)
 	}
 }

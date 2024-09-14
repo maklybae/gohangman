@@ -8,11 +8,13 @@ type Game struct {
 	used           map[rune]bool
 }
 
-func NewGame(word Word) *Game {
+func NewGame(word *Word) *Game {
 	correctLetters := make(map[rune]bool)
 	used := make(map[rune]bool)
+
 	for _, letter := range word.Word {
 		correctLetters[letter] = true
+
 		if letter == ' ' {
 			used[letter] = true
 		}
@@ -21,7 +23,7 @@ func NewGame(word Word) *Game {
 	return &Game{
 		attempts:       0,
 		mistakes:       0,
-		word:           word,
+		word:           *word,
 		correctLetters: correctLetters,
 		used:           used,
 	}
@@ -56,6 +58,7 @@ func (g *Game) State() State {
 
 func (g *Game) Pattern() string {
 	pattern := ""
+
 	for _, letter := range g.word.Word {
 		if g.used[letter] && g.correctLetters[letter] {
 			pattern += string(letter)
@@ -63,6 +66,7 @@ func (g *Game) Pattern() string {
 			pattern += "_"
 		}
 	}
+
 	return pattern
 }
 
@@ -73,6 +77,7 @@ func (g *Game) Guess(letter rune) {
 
 	g.attempts++
 	g.used[letter] = true
+
 	if g.correctLetters[letter] {
 		return
 	}
@@ -86,6 +91,7 @@ func (g *Game) IsWin() bool {
 			return false
 		}
 	}
+
 	return true
 }
 

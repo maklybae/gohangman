@@ -6,11 +6,16 @@ import (
 )
 
 func main() {
-	wordsCollection, category, difficulty, err := infrastructure.ConsoleGameInit()
+	category, difficulty, err := infrastructure.ConsoleGameInit()
 	if err != nil {
 		panic(err) // TODO: handle error with logging
 	}
+
 	inputer := infrastructure.NewConsoleInput()
 	outputer := infrastructure.NewConsoleOutput()
-	application.RunGameSession(wordsCollection, category, difficulty, inputer, outputer)
+
+	err = application.RunGameSession(category, difficulty, inputer, outputer)
+	if err != nil {
+		panic(err) // TODO: handle error with logging
+	}
 }

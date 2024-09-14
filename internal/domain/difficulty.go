@@ -1,5 +1,7 @@
 package domain
 
+import "fmt"
+
 type Difficulty int
 
 const (
@@ -13,14 +15,25 @@ func (d Difficulty) String() string {
 	return [...]string{"Easy", "Medium", "Hard"}[d]
 }
 
-func (d Difficulty) Set(value string) error {
+func (d *Difficulty) Set(value string) error {
 	switch value {
 	case "easy":
-		d = EasyDifficulty
+		*d = EasyDifficulty
 	case "medium":
-		d = MediumDifficulty
+		*d = MediumDifficulty
 	case "hard":
-		d = HardDifficulty
+		*d = HardDifficulty
+	default:
+		return &BadDifficultyError{Message: value}
 	}
+
 	return nil
+}
+
+type BadDifficultyError struct {
+	Message string
+}
+
+func (e *BadDifficultyError) Error() string {
+	return fmt.Sprintf("bad difficulty: %s", e.Message)
 }

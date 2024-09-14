@@ -4,6 +4,8 @@ import (
 	"makly/hangman/internal/domain"
 )
 
+const HangmanHeight = 7
+
 var StringStates = map[domain.State]string{
 	domain.Initial: `
    +---+

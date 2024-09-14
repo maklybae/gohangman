@@ -21,6 +21,7 @@ func ReadCollectionFromFile(path string) (wordsCollection *domain.WordsCollectio
 				err = errors.Join(err, closeErr)
 				return
 			}
+
 			err = fmt.Errorf("close file: %w", closeErr)
 		}
 	}()
