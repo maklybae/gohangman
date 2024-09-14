@@ -82,6 +82,168 @@
                     "hint": "A chair that folds up for easy storage."
                 }
             ]
+        },
+        {
+            "name": "Electronics",
+            "easy": [
+                {
+                    "word": "phone",
+                    "hint": "A portable electronic device for making telephone calls."
+                },
+                {
+                    "word": "laptop",
+                    "hint": "A small, portable personal computer."
+                },
+                {
+                    "word": "tablet",
+                    "hint": "A portable computer that uses a touchscreen as its primary input device."
+                },
+                {
+                    "word": "camera",
+                    "hint": "A device for recording visual images in the form of photographs, film, or video signals."
+                },
+                {
+                    "word": "headphones",
+                    "hint": "A pair of small loudspeaker drivers worn on or around the head over a user's ears."
+                },
+                {
+                    "word": "smartwatch",
+                    "hint": "A wearable computing device that closely resembles a wristwatch or other time-keeping device."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "printer",
+                    "hint": "A machine for printing text or pictures onto paper."
+                },
+                {
+                    "word": "router",
+                    "hint": "A device that forwards data packets between computer networks."
+                },
+                {
+                    "word": "monitor",
+                    "hint": "An output device that displays information in pictorial form."
+                },
+                {
+                    "word": "keyboard",
+                    "hint": "A panel of keys that operate a computer or typewriter."
+                },
+                {
+                    "word": "mouse",
+                    "hint": "A hand-held pointing device that detects two-dimensional motion relative to a surface."
+                },
+                {
+                    "word": "speaker",
+                    "hint": "A device that converts electrical signals into sound."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "projector",
+                    "hint": "An optical device that projects an image onto a surface."
+                },
+                {
+                    "word": "scanner",
+                    "hint": "A device that scans documents and converts them into digital data."
+                },
+                {
+                    "word": "microphone",
+                    "hint": "An instrument for converting sound waves into electrical energy variations."
+                },
+                {
+                    "word": "drone",
+                    "hint": "An unmanned aerial vehicle (UAV) that can be remotely controlled or fly autonomously."
+                },
+                {
+                    "word": "VR headset",
+                    "hint": "A head-mounted device that provides virtual reality for the wearer."
+                },
+                {
+                    "word": "game console",
+                    "hint": "A device that outputs a video signal or visual image to display a video game."
+                }
+            ]
+        },
+        {
+            "name": "Kitchen",
+            "easy": [
+                {
+                    "word": "spoon",
+                    "hint": "A utensil consisting of a small, shallow bowl on a handle, used for eating, stirring, and serving food."
+                },
+                {
+                    "word": "fork",
+                    "hint": "A utensil with two or more prongs, used for lifting food to the mouth or holding it when cutting."
+                },
+                {
+                    "word": "knife",
+                    "hint": "A utensil with a blade and handle, used for cutting or as a weapon."
+                },
+                {
+                    "word": "plate",
+                    "hint": "A flat dish, typically circular and made of china, from which food is eaten or served."
+                },
+                {
+                    "word": "cup",
+                    "hint": "A small bowl-shaped container for drinking from, typically having a handle."
+                },
+                {
+                    "word": "bowl",
+                    "hint": "A round, deep dish or basin used for food or liquid."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "blender",
+                    "hint": "An electric mixing machine used in food preparation for liquefying, chopping, or pureeing."
+                },
+                {
+                    "word": "toaster",
+                    "hint": "An electrical device for making toast."
+                },
+                {
+                    "word": "microwave",
+                    "hint": "An electric oven that heats and cooks food by exposing it to electromagnetic radiation."
+                },
+                {
+                    "word": "kettle",
+                    "hint": "A container or device in which water is boiled, having a lid, spout, and handle."
+                },
+                {
+                    "word": "oven",
+                    "hint": "An enclosed compartment, usually part of a cooker, for cooking and heating food."
+                },
+                {
+                    "word": "fridge",
+                    "hint": "A large container that uses electricity to keep food cold."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "dishwasher",
+                    "hint": "A machine for washing dishes automatically."
+                },
+                {
+                    "word": "food processor",
+                    "hint": "An electric kitchen appliance used for chopping, mixing, or pureeing foods."
+                },
+                {
+                    "word": "pressure cooker",
+                    "hint": "A pot that cooks food quickly under steam pressure."
+                },
+                {
+                    "word": "slow cooker",
+                    "hint": "An electric cooking pot that cooks food at a low temperature over a long period."
+                },
+                {
+                    "word": "stand mixer",
+                    "hint": "A stationary electric mixer for mixing ingredients."
+                },
+                {
+                    "word": "air fryer",
+                    "hint": "A kitchen appliance that cooks by circulating hot air around the food."
+                }
+            ]
         }
     ]
 }
