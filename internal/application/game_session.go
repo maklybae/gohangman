@@ -1,6 +1,7 @@
 package application
 
 import (
+	"errors"
 	"fmt"
 	"makly/hangman/internal/domain"
 )
@@ -17,15 +18,33 @@ func RunGameSession(
 	}
 
 	game := domain.NewGame(word)
+	reshow := true
 
 	for !game.IsFinished() {
-		outputer.ShowGame(game)
+		if reshow {
+			outputer.ShowGame(game)
+		}
 
-		letter := inputer.GetLetter()
+		letter, err := inputer.GetLetter()
+		if err != nil {
+			var inputerError *domain.InputerError
+			if errors.As(err, &inputerError) {
+				reshow = false
+
+				outputer.ShowInputError(err)
+
+				continue
+			}
+
+			return fmt.Errorf("getting letter to guess: %w", err)
+		}
 
 		game.Guess(letter)
+
+		reshow = true
 	}
 
+	outputer.ShowGame(game)
 	outputer.ShowGameResult(game)
 
 	return nil

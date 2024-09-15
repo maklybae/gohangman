@@ -1,5 +1,7 @@
 package domain
 
+const MaxMistakes = 6
+
 type Game struct {
 	attempts       int
 	mistakes       int
@@ -54,6 +56,10 @@ func (g *Game) State() State {
 	default:
 		return Initial
 	}
+}
+
+func (g *Game) Used() map[rune]bool {
+	return g.used
 }
 
 func (g *Game) Pattern() string {

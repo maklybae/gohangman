@@ -244,6 +244,168 @@
                     "hint": "A kitchen appliance that cooks by circulating hot air around the food."
                 }
             ]
+        },
+        {
+            "name": "Vehicles",
+            "easy": [
+                {
+                    "word": "car",
+                    "hint": "A road vehicle, typically with four wheels, powered by an internal combustion engine or electric motor."
+                },
+                {
+                    "word": "bike",
+                    "hint": "A two-wheeled vehicle that is powered by pedaling."
+                },
+                {
+                    "word": "bus",
+                    "hint": "A large motor vehicle carrying passengers by road, typically one serving the public on a fixed route and for a fare."
+                },
+                {
+                    "word": "truck",
+                    "hint": "A motor vehicle designed to transport cargo."
+                },
+                {
+                    "word": "scooter",
+                    "hint": "A two-wheeled vehicle that is powered by a motor and has a step-through frame."
+                },
+                {
+                    "word": "van",
+                    "hint": "A medium-sized motor vehicle with a boxy shape and high roof, used for transporting goods or passengers."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "motorcycle",
+                    "hint": "A two-wheeled motor vehicle that is powered by an engine."
+                },
+                {
+                    "word": "tractor",
+                    "hint": "A powerful motor vehicle with large rear wheels, used chiefly on farms for hauling equipment and trailers."
+                },
+                {
+                    "word": "ambulance",
+                    "hint": "A vehicle equipped for taking sick or injured people to and from the hospital."
+                },
+                {
+                    "word": "fire truck",
+                    "hint": "A vehicle equipped for firefighting."
+                },
+                {
+                    "word": "police car",
+                    "hint": "A vehicle used by police officers for transportation."
+                },
+                {
+                    "word": "minivan",
+                    "hint": "A small van, typically one fitted with seats for passengers."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "bulldozer",
+                    "hint": "A powerful track-laying tractor with caterpillar tracks and a broad curved upright blade at the front for clearing ground."
+                },
+                {
+                    "word": "excavator",
+                    "hint": "A large machine for digging and moving earth."
+                },
+                {
+                    "word": "forklift",
+                    "hint": "A vehicle with a pronged device in front for lifting and carrying heavy loads."
+                },
+                {
+                    "word": "cement mixer",
+                    "hint": "A machine with a revolving drum used for mixing cement with sand, gravel, and water to produce concrete."
+                },
+                {
+                    "word": "snowplow",
+                    "hint": "A vehicle or device for removing snow from roads or railways."
+                },
+                {
+                    "word": "garbage truck",
+                    "hint": "A truck specially designed to collect municipal solid waste and transport it to a solid waste treatment facility."
+                }
+            ]
+        },
+        {
+            "name": "Animals",
+            "easy": [
+                {
+                    "word": "cat",
+                    "hint": "A small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws."
+                },
+                {
+                    "word": "dog",
+                    "hint": "A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, and a barking, howling, or whining voice."
+                },
+                {
+                    "word": "cow",
+                    "hint": "A fully grown female animal of a domesticated breed of ox, kept to produce milk or beef."
+                },
+                {
+                    "word": "sheep",
+                    "hint": "A domesticated ruminant animal with a thick woolly coat and (typically only in the male) curving horns."
+                },
+                {
+                    "word": "horse",
+                    "hint": "A large plant-eating domesticated mammal with solid hoofs and a flowing mane and tail, used for riding, racing, and to carry and pull loads."
+                },
+                {
+                    "word": "pig",
+                    "hint": "An omnivorous domesticated hoofed mammal with sparse bristly hair and a flat snout for rooting in the soil."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "elephant",
+                    "hint": "A large herbivorous mammal with a trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia."
+                },
+                {
+                    "word": "giraffe",
+                    "hint": "A large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines."
+                },
+                {
+                    "word": "kangaroo",
+                    "hint": "A large plant-eating marsupial with a long powerful tail and strongly developed hind limbs that enable it to travel by leaping."
+                },
+                {
+                    "word": "panda",
+                    "hint": "A large bearlike mammal with characteristic black-and-white markings, native to certain mountain forests in China."
+                },
+                {
+                    "word": "zebra",
+                    "hint": "An African wild horse with black-and-white stripes and an erect mane."
+                },
+                {
+                    "word": "lion",
+                    "hint": "A large tawny-colored cat that lives in prides, found in Africa and northwestern India."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "platypus",
+                    "hint": "A small, aquatic, egg-laying mammal with a broad, flat tail, webbed feet, and a snout resembling a duck's bill."
+                },
+                {
+                    "word": "narwhal",
+                    "hint": "A small Arctic whale, the male of which has a long forward-pointing spirally twisted tusk developed from one of its teeth."
+                },
+                {
+                    "word": "axolotl",
+                    "hint": "A Mexican salamander that retains its larval features throughout its life."
+                },
+                {
+                    "word": "aardvark",
+                    "hint": "A nocturnal burrowing mammal with long ears, a tubular snout, and a long extensible tongue, feeding on ants and termites."
+                },
+                {
+                    "word": "quokka",
+                    "hint": "A small wallaby with a short tail and a friendly appearance, native to some small islands off the coast of Western Australia."
+                },
+                {
+                    "word": "okapi",
+                    "hint": "A large browsing mammal of the giraffe family that lives in the rainforests of the Congo."
+                }
+            ]
         }
     ]
 }
