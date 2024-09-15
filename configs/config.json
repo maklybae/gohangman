@@ -1,0 +1,4 @@
+{
+    "defaultSamplePath": "./sample.json",
+    "jsonSchemaPath": "./schema.json"
+}

@@ -47,10 +47,10 @@ func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
 	return &categories[chosenIndex], nil
 }
 
-func ConsoleGameInit() (category *domain.Category, difficulty domain.Difficulty, err error) {
+func ConsoleGameInit(defaultSamplePath string) (category *domain.Category, difficulty domain.Difficulty, err error) {
 	path, difficulty := InitFlagsParameters()
 	if path == "" {
-		path, err = filepath.Abs("sample.json")
+		path, err = filepath.Abs(defaultSamplePath)
 		if err != nil {
 			return nil, domain.UnknownDifficulty, fmt.Errorf("get absolute path: %w", err)
 		}
