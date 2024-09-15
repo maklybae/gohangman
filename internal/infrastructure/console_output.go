@@ -42,6 +42,19 @@ func (c *ConsoleOutput) showMistakes(mistakes int) {
 	fmt.Printf("Mistakes: %d / %d\n", mistakes, domain.MaxMistakes)
 }
 
+func (c *ConsoleOutput) showHint(hint string) {
+	reversedHint := ""
+	for _, r := range hint {
+		reversedHint = string(r) + reversedHint
+	}
+
+	fmt.Printf("Reversed hint: %s\n", reversedHint)
+}
+
+func (c *ConsoleOutput) showPattern(pattern string) {
+	fmt.Printf("Pattern: %s\n", pattern)
+}
+
 func (c *ConsoleOutput) clear() {
 	fmt.Printf("\033[1A")
 	fmt.Printf("\033[2K")
@@ -63,7 +76,14 @@ func (c *ConsoleOutput) ShowGame(game *domain.Game) {
 	c.showMistakes(game.Mistakes())
 	c.showUsed(game.Used())
 	c.showState(game.State())
-	fmt.Printf("\n\nPattern: %s\n\n", game.Pattern())
+	fmt.Printf("\n\n")
+	c.showPattern(game.Pattern())
+
+	if game.IsHintAvailable() {
+		c.showHint(game.Hint())
+	}
+
+	fmt.Printf("\n")
 	fmt.Printf("Guess next letter: ")
 }
 

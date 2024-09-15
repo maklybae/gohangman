@@ -76,6 +76,10 @@ func (g *Game) Pattern() string {
 	return pattern
 }
 
+func (g *Game) Hint() string {
+	return g.word.Hint
+}
+
 func (g *Game) Guess(letter rune) {
 	if g.used[letter] || letter == ' ' {
 		return
@@ -107,4 +111,8 @@ func (g *Game) IsLose() bool {
 
 func (g *Game) IsFinished() bool {
 	return g.IsLose() || g.IsWin()
+}
+
+func (g *Game) IsHintAvailable() bool {
+	return g.mistakes >= 3
 }
