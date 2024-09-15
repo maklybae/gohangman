@@ -47,16 +47,16 @@ func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
 	return &categories[chosenIndex], nil
 }
 
-func ConsoleGameInit(defaultSamplePath string) (category *domain.Category, difficulty domain.Difficulty, err error) {
-	path, difficulty := InitFlagsParameters()
-	if path == "" {
-		path, err = filepath.Abs(defaultSamplePath)
+func Init(defaultSamplePath, schemaPath string) (category *domain.Category, difficulty domain.Difficulty, err error) {
+	jsonAbsPath, difficulty := InitFlagsParameters()
+	if jsonAbsPath == "" {
+		jsonAbsPath, err = filepath.Abs(defaultSamplePath)
 		if err != nil {
 			return nil, domain.UnknownDifficulty, fmt.Errorf("get absolute path: %w", err)
 		}
 	}
 
-	wordsCollection, err := ReadCollectionFromFile(path)
+	wordsCollection, err := ReadCollectionFromFile(jsonAbsPath, schemaPath)
 	if err != nil {
 		return nil, domain.UnknownDifficulty, fmt.Errorf("read collection from file: %w", err)
 	} else if wordsCollection == nil || len(wordsCollection.Categories) == 0 {

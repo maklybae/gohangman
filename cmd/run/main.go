@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"makly/hangman/internal/application"
 	"makly/hangman/internal/infrastructure"
 
@@ -17,8 +18,12 @@ func main() {
 		panic(err) // TODO: handle error with logging
 	}
 
-	category, difficulty, err := infrastructure.ConsoleGameInit(viper.GetString("defaultSamplePath"))
+	category, difficulty, err := infrastructure.Init(viper.GetString("defaultSamplePath"), viper.GetString("jsonSchemaPath"))
 	if err != nil {
+		var incorrectJSONError *infrastructure.IncorrectJSONError
+		if errors.As(err, &incorrectJSONError) {
+
+		}
 		panic(err) // TODO: handle error with logging
 	}
 
