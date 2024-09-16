@@ -3,6 +3,7 @@ package climenu
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 
 	"github.com/eiannone/keyboard"
 )
@@ -26,15 +27,20 @@ func NewMenu(oneLineUserMessage string) *Menu {
 }
 
 func (m *Menu) AddItem(label string) {
+	slog.Info("Adding item to menu", slog.String("label", label), slog.Any("menu", m))
 	m.menuItems = append(m.menuItems, MenuItem(label))
 }
 
 func (m *Menu) moveUp() {
+	slog.Info("Moving menu up", slog.Any("menu", m))
+
 	m.position--
 	m.position = (m.position + len(m.menuItems)) % len(m.menuItems)
 }
 
 func (m *Menu) moveDown() {
+	slog.Info("Moving menu down", slog.Any("menu", m))
+
 	m.position++
 	m.position = (m.position + len(m.menuItems)) % len(m.menuItems)
 }
@@ -44,6 +50,8 @@ func (m *Menu) destroyMenu() {
 		fmt.Printf("\033[1A")
 		fmt.Printf("\033[K")
 	}
+
+	slog.Info("Menu destroyed", slog.Any("menu", m))
 }
 
 func (m *Menu) clearMenu() {
@@ -69,6 +77,8 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 		return -1, fmt.Errorf("keyboard open: %w", err)
 	}
 
+	slog.Info("Keyboard opened")
+
 	defer func() {
 		if closeErr := keyboard.Close(); closeErr != nil {
 			if err != nil {
@@ -78,6 +88,8 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 
 			err = fmt.Errorf("keyboard close: %w", closeErr)
 		}
+
+		slog.Info("Keyboard closed")
 	}()
 
 	// Hide cursor
@@ -97,6 +109,8 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 			panic(err)
 		}
 
+		slog.Info("Got key", slog.Any("key", key))
+
 		switch key { //nolint
 		case keyboard.KeyArrowUp:
 			m.moveUp()
@@ -112,4 +126,12 @@ func (m *Menu) RunMenu() (chosenIndex int, err error) {
 
 		m.drawMenu(true)
 	}
+}
+
+func (m *Menu) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("oneLineUserMessage", m.oneLineUserMessage),
+		slog.Int("position", m.position),
+		slog.Any("menuItems", m.menuItems),
+	)
 }

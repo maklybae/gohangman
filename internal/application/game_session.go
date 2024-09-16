@@ -3,6 +3,7 @@ package application
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"makly/hangman/internal/domain"
 )
 
@@ -17,18 +18,25 @@ func RunGameSession(
 		return fmt.Errorf("choice word: %w", err)
 	}
 
+	slog.Info("Random choose word", slog.String("word", word.Word))
+
 	game := domain.NewGame(word)
+	slog.Info("Game started", "game", game)
+
 	reshow := true
 
 	for !game.IsFinished() {
 		if reshow {
 			outputer.ShowGame(game)
+			slog.Info("Reshow game", "game", game)
 		}
 
 		letter, err := inputer.GetLetter()
 		if err != nil {
 			var inputerError *domain.InputerError
 			if errors.As(err, &inputerError) {
+				slog.Error("Getting letter to guess", slog.Any("error", err))
+
 				reshow = false
 
 				outputer.ShowInputError(err)
@@ -38,6 +46,8 @@ func RunGameSession(
 
 			return fmt.Errorf("getting letter to guess: %w", err)
 		}
+
+		slog.Info("Got correct letter to guess", slog.String("Letter", string(letter)))
 
 		game.Guess(letter)
 

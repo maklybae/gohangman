@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"fmt"
+	"log/slog"
 	"makly/hangman/internal/domain"
 	"makly/hangman/internal/draw"
 	"unicode"
@@ -23,6 +24,7 @@ func (c *ConsoleOutput) showUsed(used map[rune]bool) {
 
 	for letter := 'a'; letter <= 'z'; letter++ {
 		if used[letter] {
+			// Bold the used letters
 			fmt.Printf("\033[1m")
 			fmt.Printf("%c ", unicode.ToUpper(letter))
 			fmt.Printf("\033[0m")
@@ -85,13 +87,17 @@ func (c *ConsoleOutput) ShowGame(game *domain.Game) {
 
 	fmt.Printf("\n")
 	fmt.Printf("Guess next letter: ")
+
+	slog.Info("Current game state printed", slog.Any("game", game))
 }
 
 func (c *ConsoleOutput) ShowGameResult(game *domain.Game) {
 	if game.IsWin() {
 		fmt.Println("You won!")
+		slog.Info("Game result printed", slog.String("result", "win"))
 	} else {
 		fmt.Println("You lost!")
+		slog.Info("Game result printed", slog.String("result", "lose"))
 	}
 }
 

@@ -12,7 +12,7 @@ const (
 )
 
 func (d Difficulty) String() string {
-	return [...]string{"Easy", "Medium", "Hard"}[d]
+	return [...]string{"Easy", "Medium", "Hard", "Unknown"}[d]
 }
 
 func (d *Difficulty) Set(value string) error {

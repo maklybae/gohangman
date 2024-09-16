@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"bufio"
 	"fmt"
+	"log/slog"
 	"makly/hangman/internal/domain"
 	"os"
 	"unicode"
@@ -25,6 +26,9 @@ func (c *ConsoleInput) GetLetter() (letter rune, err error) {
 	}
 
 	text := c.scanner.Text()
+
+	slog.Info("Got letter from standard cin", slog.String("letter", text))
+
 	if len([]rune(text)) != 1 {
 		return 0, &domain.InputerError{Message: "not a single letter", InnerError: nil}
 	}

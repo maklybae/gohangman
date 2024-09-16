@@ -1,11 +1,22 @@
 package domain
 
-import "fmt"
+import (
+	"fmt"
+	"log/slog"
+)
 
 type WordsCollection struct {
 	Creator     string     `json:"creator"`
 	Description string     `json:"description"`
 	Categories  []Category `json:"categories"`
+}
+
+func (w *WordsCollection) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("creator", w.Creator),
+		slog.String("description", w.Description),
+		slog.Int("categories count", len(w.Categories)),
+	)
 }
 
 type BadWordsCollectionError struct {

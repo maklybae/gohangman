@@ -1,5 +1,7 @@
 package domain
 
+import "log/slog"
+
 const MaxMistakes = 6
 
 type Game struct {
@@ -73,6 +75,8 @@ func (g *Game) Pattern() string {
 		}
 	}
 
+	slog.Info("Pattern generated", slog.String("pattern", pattern), slog.Any("game", g))
+
 	return pattern
 }
 
@@ -81,6 +85,8 @@ func (g *Game) Hint() string {
 }
 
 func (g *Game) Guess(letter rune) {
+	slog.Info("Guess letter", slog.String("letter", string(letter)))
+
 	if g.used[letter] || letter == ' ' {
 		return
 	}
@@ -89,8 +95,11 @@ func (g *Game) Guess(letter rune) {
 	g.used[letter] = true
 
 	if g.correctLetters[letter] {
+		slog.Info("Correct guess", slog.String("letter", string(letter)))
 		return
 	}
+
+	slog.Info("Incorrect guess", slog.String("letter", string(letter)))
 
 	g.mistakes++
 }
@@ -101,6 +110,8 @@ func (g *Game) IsWin() bool {
 			return false
 		}
 	}
+
+	slog.Info("Win check completed successfully", slog.Any("game", g))
 
 	return true
 }
@@ -115,4 +126,12 @@ func (g *Game) IsFinished() bool {
 
 func (g *Game) IsHintAvailable() bool {
 	return g.mistakes >= 3
+}
+
+func (g *Game) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.Int("attempts", g.attempts),
+		slog.Int("mistakes", g.mistakes),
+		slog.String("word", g.word.Word),
+	)
 }

@@ -1,4 +1,5 @@
 {
     "defaultSamplePath": "./sample.json",
-    "jsonSchemaPath": "./schema.json"
+    "jsonSchemaPath": "./schema.json",
+    "logPath": "logs/log.log"
 }

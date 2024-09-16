@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"flag"
 	"fmt"
+	"log/slog"
 	"makly/hangman/internal/domain"
 	"makly/hangman/pkg/climenu"
 	"path/filepath"
@@ -15,7 +16,7 @@ func InitFlagsParameters() (path string, difficulty domain.Difficulty) {
 
 	flag.Parse()
 
-	return
+	return path, difficulty
 }
 
 func ChooseDifficulty() (domain.Difficulty, error) {
@@ -24,10 +25,14 @@ func ChooseDifficulty() (domain.Difficulty, error) {
 	menu.AddItem(domain.MediumDifficulty.String())
 	menu.AddItem(domain.HardDifficulty.String())
 
+	slog.Info("Start choose difficulty menu", slog.Any("menu", menu))
+
 	chosenIndex, err := menu.RunMenu()
 	if err != nil {
 		return domain.UnknownDifficulty, fmt.Errorf("choose difficulty: %w", err)
 	}
+
+	slog.Info("Chosen difficulty", slog.String("difficulty", domain.Difficulty(chosenIndex).String()))
 
 	return domain.Difficulty(chosenIndex), nil
 }
@@ -38,11 +43,14 @@ func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
 		menu.AddItem(category.Name)
 	}
 
+	slog.Info("Start choose category menu", slog.Any("menu", menu))
 	chosenIndex, err := menu.RunMenu()
 
 	if err != nil {
 		return nil, fmt.Errorf("choose category: %w", err)
 	}
+
+	slog.Info("Chosen category", slog.String("category", categories[chosenIndex].Name))
 
 	return &categories[chosenIndex], nil
 }
@@ -56,6 +64,8 @@ func Init(defaultSamplePath, schemaPath string) (category *domain.Category, diff
 		}
 	}
 
+	slog.Info("Flags parsed", slog.String("path", jsonAbsPath), slog.String("difficulty", difficulty.String()))
+
 	wordsCollection, err := ReadCollectionFromFile(jsonAbsPath, schemaPath)
 	if err != nil {
 		return nil, domain.UnknownDifficulty, fmt.Errorf("read collection from file: %w", err)
@@ -63,10 +73,12 @@ func Init(defaultSamplePath, schemaPath string) (category *domain.Category, diff
 		return nil, domain.UnknownDifficulty, &domain.BadWordsCollectionError{Message: "words collection is empty"}
 	}
 
+	slog.Info("Read words collection", slog.Any("words collection", wordsCollection))
+
 	if difficulty == domain.UnknownDifficulty {
 		difficulty, err = ChooseDifficulty()
 		if err != nil {
-			return nil, domain.UnknownDifficulty, fmt.Errorf("choose difficulty: %w", err)
+			return nil, domain.UnknownDifficulty, fmt.Errorf("start choose difficulty menu: %w", err)
 		}
 	}
 
