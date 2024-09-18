@@ -26,36 +26,23 @@ func (e *IncorrectJSONError) Error() string {
 	return errorString
 }
 
-func ReadCollectionFromFile(jsonPath, schemaPath string) (wordsCollection *domain.WordsCollection, err error) {
-	file, err := os.Open(jsonPath)
-	if err != nil {
-		return nil, fmt.Errorf("open file: %w", err)
-	}
+type Reader interface {
+	io.Reader
+}
 
-	slog.Info("Open json file", slog.String("path", jsonPath))
-
-	defer func() {
-		if closeErr := file.Close(); closeErr != nil {
-			if err != nil {
-				err = errors.Join(err, closeErr)
-				return
-			}
-
-			err = fmt.Errorf("close file: %w", closeErr)
-		}
-
-		slog.Info("Close json file", slog.String("path", jsonPath))
-	}()
-
-	byteValue, err := io.ReadAll(file)
+func ReadCollection(jsonReader, schemaReader Reader) (wordsCollection *domain.WordsCollection, err error) {
+	jsonBytes, err := io.ReadAll(jsonReader)
 	if err != nil {
 		return nil, fmt.Errorf("read file: %w", err)
 	}
 
-	slog.Info("Read json file", slog.String("path", jsonPath))
+	schemaBytes, err := io.ReadAll(schemaReader)
+	if err != nil {
+		return nil, fmt.Errorf("read schema file: %w", err)
+	}
 
-	schemaLoader := gojsonschema.NewReferenceLoader("file://" + schemaPath)
-	documentLoader := gojsonschema.NewBytesLoader(byteValue)
+	documentLoader := gojsonschema.NewBytesLoader(jsonBytes)
+	schemaLoader := gojsonschema.NewBytesLoader(schemaBytes)
 
 	result, err := gojsonschema.Validate(schemaLoader, documentLoader)
 	if err != nil {
@@ -68,7 +55,7 @@ func ReadCollectionFromFile(jsonPath, schemaPath string) (wordsCollection *domai
 		return nil, &IncorrectJSONError{Message: "json schema is invalid", JSONErrors: result.Errors()}
 	}
 
-	err = json.Unmarshal(byteValue, &wordsCollection)
+	err = json.Unmarshal(jsonBytes, &wordsCollection)
 	if err != nil {
 		return nil, fmt.Errorf("unmarshal json: %w", err)
 	}
@@ -76,4 +63,48 @@ func ReadCollectionFromFile(jsonPath, schemaPath string) (wordsCollection *domai
 	slog.Info("Unmarshal json", slog.Any("words collection", wordsCollection))
 
 	return wordsCollection, nil
+}
+
+func ReadCollectionFromFile(jsonPath, schemaPath string) (wordsCollection *domain.WordsCollection, err error) {
+	slog.Info("Open json file", slog.String("path", jsonPath))
+
+	jsonFile, err := os.Open(jsonPath)
+	if err != nil {
+		return nil, fmt.Errorf("open file: %w", err)
+	}
+
+	defer func() {
+		if closeErr := jsonFile.Close(); closeErr != nil {
+			if err != nil {
+				err = errors.Join(err, closeErr)
+				return
+			}
+
+			err = fmt.Errorf("close file: %w", closeErr)
+		}
+
+		slog.Info("Close json file", slog.String("path", jsonPath))
+	}()
+
+	slog.Info("Open json schema file", slog.String("path", schemaPath))
+
+	schemaFile, err := os.Open(schemaPath)
+	if err != nil {
+		return nil, fmt.Errorf("open schema file: %w", err)
+	}
+
+	defer func() {
+		if closeErr := schemaFile.Close(); closeErr != nil {
+			if err != nil {
+				err = errors.Join(err, closeErr)
+				return
+			}
+
+			err = fmt.Errorf("close schema file: %w", closeErr)
+		}
+
+		slog.Info("Close json schema file", slog.String("path", schemaPath))
+	}()
+
+	return ReadCollection(jsonFile, schemaFile)
 }
