@@ -7,6 +7,24 @@ import (
 	"math/big"
 )
 
+func ChoiceDifficulty() (difficulty domain.Difficulty, err error) {
+	n, err := rand.Int(rand.Reader, big.NewInt(int64(domain.DifficultyCount)))
+	if err != nil {
+		return -1, fmt.Errorf("random choose word: %w", err)
+	}
+
+	return domain.Difficulty(n.Int64()), nil
+}
+
+func ChoiceCategory(categories []domain.Category) (category *domain.Category, err error) {
+	n, err := rand.Int(rand.Reader, big.NewInt(int64(len(categories))))
+	if err != nil {
+		return nil, fmt.Errorf("random choose category: %w", err)
+	}
+
+	return &categories[n.Int64()], nil
+}
+
 func ChoiceWord(category *domain.Category, difficulty domain.Difficulty) (word *domain.Word, err error) {
 	var words []domain.Word
 

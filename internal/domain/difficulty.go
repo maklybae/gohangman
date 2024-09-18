@@ -11,6 +11,8 @@ const (
 	UnknownDifficulty
 )
 
+const DifficultyCount = 3
+
 func (d Difficulty) String() string {
 	return [...]string{"Easy", "Medium", "Hard", "Unknown"}[d]
 }

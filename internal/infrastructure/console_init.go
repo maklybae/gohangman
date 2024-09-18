@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
+	"makly/hangman/internal/application"
 	"makly/hangman/internal/domain"
 	"makly/hangman/pkg/climenu"
 	"path/filepath"
@@ -20,8 +21,9 @@ func InitFlagsParameters() (path string, difficulty domain.Difficulty, maxMistak
 	return path, difficulty, maxMistakes
 }
 
-func ChooseDifficulty() (domain.Difficulty, error) {
+func ChooseDifficulty() (difficulty domain.Difficulty, err error) {
 	menu := climenu.NewMenu("Choose difficulty:")
+	menu.AddItem("Secret difficulty (difficulty will be chosen randomly)")
 	menu.AddItem(domain.EasyDifficulty.String())
 	menu.AddItem(domain.MediumDifficulty.String())
 	menu.AddItem(domain.HardDifficulty.String())
@@ -33,27 +35,51 @@ func ChooseDifficulty() (domain.Difficulty, error) {
 		return domain.UnknownDifficulty, fmt.Errorf("choose difficulty: %w", err)
 	}
 
+	if chosenIndex == 0 {
+		difficulty, err := application.ChoiceDifficulty()
+		if err != nil {
+			return domain.UnknownDifficulty, fmt.Errorf("random choose difficulty: %w", err)
+		}
+
+		slog.Info("Random chosen difficulty", slog.String("difficulty", difficulty.String()))
+
+		return difficulty, nil
+	}
+
 	slog.Info("Chosen difficulty", slog.String("difficulty", domain.Difficulty(chosenIndex).String()))
 
-	return domain.Difficulty(chosenIndex), nil
+	return domain.Difficulty(chosenIndex - 1), nil
 }
 
-func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
+func ChooseCategory(categories []domain.Category) (category *domain.Category, err error) {
 	menu := climenu.NewMenu("Choose category:")
+	menu.AddItem("Secret category (category will be chosen randomly)")
+
 	for _, category := range categories {
 		menu.AddItem(category.Name)
 	}
 
 	slog.Info("Start choose category menu", slog.Any("menu", menu))
-	chosenIndex, err := menu.RunMenu()
 
+	chosenIndex, err := menu.RunMenu()
 	if err != nil {
 		return nil, fmt.Errorf("choose category: %w", err)
 	}
 
+	if chosenIndex == 0 {
+		category, err = application.ChoiceCategory(categories)
+		if err != nil {
+			return nil, fmt.Errorf("random choose category: %w", err)
+		}
+
+		slog.Info("Random chosen category", slog.String("category", categories[chosenIndex].Name))
+
+		return category, nil
+	}
+
 	slog.Info("Chosen category", slog.String("category", categories[chosenIndex].Name))
 
-	return &categories[chosenIndex], nil
+	return &categories[chosenIndex-1], nil
 }
 
 func Init(defaultSamplePath, schemaPath string) (category *domain.Category, difficulty domain.Difficulty, maxMistakes int, err error) {
