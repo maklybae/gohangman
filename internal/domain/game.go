@@ -2,17 +2,16 @@ package domain
 
 import "log/slog"
 
-const MaxMistakes = 6
-
 type Game struct {
 	attempts       int
 	mistakes       int
+	maxMistakes    int
 	word           Word
 	correctLetters map[rune]bool
 	used           map[rune]bool
 }
 
-func NewGame(word *Word) *Game {
+func NewGame(word *Word, maxMistakes int) *Game {
 	correctLetters := make(map[rune]bool)
 	used := make(map[rune]bool)
 
@@ -27,6 +26,7 @@ func NewGame(word *Word) *Game {
 	return &Game{
 		attempts:       0,
 		mistakes:       0,
+		maxMistakes:    maxMistakes,
 		word:           *word,
 		correctLetters: correctLetters,
 		used:           used,
@@ -41,8 +41,13 @@ func (g *Game) Mistakes() int {
 	return g.mistakes
 }
 
+func (g *Game) MaxMistakes() int {
+	return g.maxMistakes
+}
+
 func (g *Game) State() State {
-	switch g.mistakes {
+	prop := g.mistakes * StateCount / g.maxMistakes
+	switch prop {
 	case 1:
 		return Head
 	case 2:
@@ -117,7 +122,7 @@ func (g *Game) IsWin() bool {
 }
 
 func (g *Game) IsLose() bool {
-	return g.mistakes >= 6
+	return g.mistakes >= g.maxMistakes
 }
 
 func (g *Game) IsFinished() bool {
@@ -125,7 +130,7 @@ func (g *Game) IsFinished() bool {
 }
 
 func (g *Game) IsHintAvailable() bool {
-	return g.mistakes >= 3
+	return g.mistakes >= g.maxMistakes/2
 }
 
 func (g *Game) LogValue() slog.Value {

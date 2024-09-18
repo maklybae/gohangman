@@ -10,6 +10,7 @@ import (
 func RunGameSession(
 	category *domain.Category,
 	difficulty domain.Difficulty,
+	maxMistakes int,
 	inputer domain.GameInputer,
 	outputer domain.GameOutputer,
 ) (err error) {
@@ -20,7 +21,7 @@ func RunGameSession(
 
 	slog.Info("Random choose word", slog.String("word", word.Word))
 
-	game := domain.NewGame(word)
+	game := domain.NewGame(word, maxMistakes)
 	slog.Info("Game started", "game", game)
 
 	reshow := true

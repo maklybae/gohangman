@@ -38,7 +38,7 @@ func main() {
 	slog.SetDefault(logger)
 
 	// Initialize game
-	category, difficulty, err := infrastructure.Init(viper.GetString("defaultSamplePath"), viper.GetString("jsonSchemaPath"))
+	category, difficulty, maxMistakes, err := infrastructure.Init(viper.GetString("defaultSamplePath"), viper.GetString("jsonSchemaPath"))
 	if err != nil {
 		var exitErr *climenu.ExitError
 		if errors.As(err, &exitErr) {
@@ -54,7 +54,7 @@ func main() {
 	outputer := infrastructure.NewConsoleOutput()
 
 	// Run game session
-	if err := application.RunGameSession(category, difficulty, inputer, outputer); err != nil {
+	if err := application.RunGameSession(category, difficulty, maxMistakes, inputer, outputer); err != nil {
 		slog.Error("Game session error", slog.Any("error", err))
 		panic(err)
 	}

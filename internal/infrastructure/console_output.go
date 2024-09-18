@@ -40,8 +40,8 @@ func (c *ConsoleOutput) showAttempts(attempts int) {
 	fmt.Printf("Attempts: %d\n", attempts)
 }
 
-func (c *ConsoleOutput) showMistakes(mistakes int) {
-	fmt.Printf("Mistakes: %d / %d\n", mistakes, domain.MaxMistakes)
+func (c *ConsoleOutput) showMistakes(mistakes, maxMistakes int) {
+	fmt.Printf("Mistakes: %d / %d\n", mistakes, maxMistakes)
 }
 
 func (c *ConsoleOutput) showHint(hint string) {
@@ -75,7 +75,7 @@ func (c *ConsoleOutput) ShowGame(game *domain.Game) {
 	c.memorizeCursor()
 
 	c.showAttempts(game.Attempts())
-	c.showMistakes(game.Mistakes())
+	c.showMistakes(game.Mistakes(), game.MaxMistakes())
 	c.showUsed(game.Used())
 	c.showState(game.State())
 	fmt.Printf("\n\n")

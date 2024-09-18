@@ -9,14 +9,15 @@ import (
 	"path/filepath"
 )
 
-func InitFlagsParameters() (path string, difficulty domain.Difficulty) {
+func InitFlagsParameters() (path string, difficulty domain.Difficulty, maxMistakes int) {
 	flag.StringVar(&path, "path", "", "path to json file with words collection")
 	flag.Var(&difficulty, "difficulty", "difficulty level: easy, medium, hard")
+	flag.IntVar(&maxMistakes, "maxmistakes", domain.StateCount, "maximum number of mistakes: integer from 1 to 26; default value: 6")
 	difficulty = domain.UnknownDifficulty
 
 	flag.Parse()
 
-	return path, difficulty
+	return path, difficulty, maxMistakes
 }
 
 func ChooseDifficulty() (domain.Difficulty, error) {
@@ -55,22 +56,30 @@ func ChooseCategory(categories []domain.Category) (*domain.Category, error) {
 	return &categories[chosenIndex], nil
 }
 
-func Init(defaultSamplePath, schemaPath string) (category *domain.Category, difficulty domain.Difficulty, err error) {
-	jsonAbsPath, difficulty := InitFlagsParameters()
+func Init(defaultSamplePath, schemaPath string) (category *domain.Category, difficulty domain.Difficulty, maxMistakes int, err error) {
+	jsonAbsPath, difficulty, maxMistakes := InitFlagsParameters()
 	if jsonAbsPath == "" {
 		jsonAbsPath, err = filepath.Abs(defaultSamplePath)
 		if err != nil {
-			return nil, domain.UnknownDifficulty, fmt.Errorf("get absolute path: %w", err)
+			return nil, domain.UnknownDifficulty, -1, fmt.Errorf("get absolute path: %w", err)
 		}
 	}
 
-	slog.Info("Flags parsed", slog.String("path", jsonAbsPath), slog.String("difficulty", difficulty.String()))
+	slog.Info("Flags parsed",
+		slog.String("path", jsonAbsPath),
+		slog.String("difficulty", difficulty.String()),
+		slog.Int("maxMistakes", maxMistakes))
+
+	if maxMistakes < 1 || maxMistakes > ('Z'-'A'+1) {
+		slog.Warn("Invalid maxMistakes value, set default value", slog.Int("maxMistakes", maxMistakes))
+		maxMistakes = domain.StateCount
+	}
 
 	wordsCollection, err := ReadCollectionFromFile(jsonAbsPath, schemaPath)
 	if err != nil {
-		return nil, domain.UnknownDifficulty, fmt.Errorf("read collection from file: %w", err)
+		return nil, domain.UnknownDifficulty, -1, fmt.Errorf("read collection from file: %w", err)
 	} else if wordsCollection == nil || len(wordsCollection.Categories) == 0 {
-		return nil, domain.UnknownDifficulty, &domain.BadWordsCollectionError{Message: "words collection is empty"}
+		return nil, domain.UnknownDifficulty, -1, &domain.BadWordsCollectionError{Message: "words collection is empty"}
 	}
 
 	slog.Info("Read words collection", slog.Any("words collection", wordsCollection))
@@ -78,16 +87,16 @@ func Init(defaultSamplePath, schemaPath string) (category *domain.Category, diff
 	if difficulty == domain.UnknownDifficulty {
 		difficulty, err = ChooseDifficulty()
 		if err != nil {
-			return nil, domain.UnknownDifficulty, fmt.Errorf("start choose difficulty menu: %w", err)
+			return nil, domain.UnknownDifficulty, -1, fmt.Errorf("start choose difficulty menu: %w", err)
 		}
 	}
 
 	category, err = ChooseCategory(wordsCollection.Categories)
 	if err != nil {
-		return nil, domain.UnknownDifficulty, fmt.Errorf("choose category: %w", err)
+		return nil, domain.UnknownDifficulty, -1, fmt.Errorf("choose category: %w", err)
 	} else if category == nil || len(category.EasyWords)+len(category.MediumWords)+len(category.HardWords) == 0 {
-		return nil, domain.UnknownDifficulty, &domain.BadCategoryError{Message: "category is empty"}
+		return nil, domain.UnknownDifficulty, -1, &domain.BadCategoryError{Message: "category is empty"}
 	}
 
-	return category, difficulty, nil
+	return category, difficulty, maxMistakes, nil
 }

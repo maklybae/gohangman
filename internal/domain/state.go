@@ -11,3 +11,5 @@ const (
 	LeftLeg
 	RightLeg
 )
+
+const StateCount = 6
