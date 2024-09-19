@@ -239,9 +239,9 @@ func TestValidateJSONBytes(t *testing.T) {
 		err := validator.ValidateJSONBytes(tt.jsonBytes, schemaReader)
 
 		if tt.expectError {
-			assertInstance.ErrorAs(err, &jsonErr)
+			assertInstance.ErrorAs(err, &jsonErr, tt.name)
 		} else {
-			assertInstance.NoError(err)
+			assertInstance.NoError(err, tt.name)
 		}
 	}
 }
@@ -349,9 +349,9 @@ func TestReadCollection(t *testing.T) {
 		)
 
 		if tt.expectedErr != nil {
-			assertInstance.ErrorAs(err, &tt.expectedErr)
+			assertInstance.ErrorAs(err, &tt.expectedErr, tt.name)
 		} else {
-			assertInstance.Equal(tt.expectedWordsCollection, *wordsCollection)
+			assertInstance.Equal(tt.expectedWordsCollection, *wordsCollection, tt.name)
 		}
 	}
 }

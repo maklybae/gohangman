@@ -135,10 +135,10 @@ func TestGetLetter(t *testing.T) {
 		letter, err := consoleInput.GetLetter()
 
 		if tt.expectError {
-			assertInstance.Error(err)
+			assertInstance.Error(err, tt.name)
 		} else {
-			assertInstance.NoError(err)
-			assertInstance.Equal(tt.returnValue, letter)
+			assertInstance.NoError(err, tt.name)
+			assertInstance.Equal(tt.returnValue, letter, tt.name)
 		}
 	}
 }
