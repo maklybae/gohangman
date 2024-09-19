@@ -26,7 +26,7 @@ func (d *Difficulty) Set(value string) error {
 	case "hard":
 		*d = HardDifficulty
 	default:
-		return &BadDifficultyError{Message: value}
+		*d = UnknownDifficulty
 	}
 
 	return nil

@@ -3,11 +3,13 @@ package infrastructure_test
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"io"
 	"log"
 	"makly/hangman/internal/domain"
 	"makly/hangman/internal/infrastructure"
 	"makly/hangman/internal/infrastructure/mocks"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -359,5 +361,71 @@ func TestReadCollection(t *testing.T) {
 		} else {
 			assertInstance.Equal(tt.expectedWordsCollection, *wordsCollection, tt.name)
 		}
+	}
+}
+
+func TestInitFlagsParameters(t *testing.T) {
+	tests := []struct {
+		name                string
+		args                []string
+		expectedPath        string
+		expectedDifficulty  domain.Difficulty
+		expectedMaxMistakes int
+	}{
+		{
+			name:                "default values",
+			args:                []string{},
+			expectedPath:        "",
+			expectedDifficulty:  domain.UnknownDifficulty,
+			expectedMaxMistakes: domain.StateCount,
+		},
+		{
+			name:                "valid arguments",
+			args:                []string{"-path", "test/path", "-difficulty", "medium", "-maxmistakes", "5"},
+			expectedPath:        "test/path",
+			expectedDifficulty:  domain.MediumDifficulty,
+			expectedMaxMistakes: 5,
+		},
+		{
+			name:                "invalid difficulty",
+			args:                []string{"-path", "test/path", "-difficulty", "invalid", "-maxmistakes", "5"},
+			expectedPath:        "test/path",
+			expectedDifficulty:  domain.UnknownDifficulty,
+			expectedMaxMistakes: 5,
+		},
+		{
+			name:                "missing max mistakes",
+			args:                []string{"-path", "test/path", "-difficulty", "medium"},
+			expectedPath:        "test/path",
+			expectedDifficulty:  domain.MediumDifficulty,
+			expectedMaxMistakes: domain.StateCount,
+		},
+		{
+			name:                "no args",
+			args:                []string{},
+			expectedPath:        "",
+			expectedDifficulty:  domain.UnknownDifficulty,
+			expectedMaxMistakes: domain.StateCount,
+		},
+		{
+			name:                "only path",
+			args:                []string{"-path", "test/path"},
+			expectedPath:        "test/path",
+			expectedDifficulty:  domain.UnknownDifficulty,
+			expectedMaxMistakes: domain.StateCount,
+		},
+	}
+
+	for _, tt := range tests {
+		// Reset flags and os.Args before each test
+		flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
+
+		os.Args = append([]string{"cmd"}, tt.args...)
+
+		gotPath, gotDifficulty, gotMaxMistakes := infrastructure.InitFlagsParameters()
+
+		assert.Equal(t, tt.expectedPath, gotPath)
+		assert.Equal(t, tt.expectedDifficulty, gotDifficulty)
+		assert.Equal(t, tt.expectedMaxMistakes, gotMaxMistakes)
 	}
 }
