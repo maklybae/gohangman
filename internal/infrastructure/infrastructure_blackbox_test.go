@@ -3,6 +3,8 @@ package infrastructure_test
 import (
 	"bytes"
 	"encoding/json"
+	"io"
+	"log"
 	"makly/hangman/internal/domain"
 	"makly/hangman/internal/infrastructure"
 	"makly/hangman/internal/infrastructure/mocks"
@@ -106,6 +108,8 @@ const testStringSchema = `{
 }`
 
 func TestValidateJSONBytes(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name        string
 		jsonBytes   []byte
@@ -247,6 +251,8 @@ func TestValidateJSONBytes(t *testing.T) {
 }
 
 func TestReadCollection(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	mockJSONBytesValidator := &mocks.JSONBytesValidator{}
 	mockJSONBytesValidator.On("ValidateJSONBytes", mock.Anything, mock.Anything).Return(nil)
 

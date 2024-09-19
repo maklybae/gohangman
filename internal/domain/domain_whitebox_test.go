@@ -1,12 +1,16 @@
 package domain //nolint
 
 import (
+	"io"
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGameState(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name        string
 		mistakes    int
@@ -153,6 +157,8 @@ func TestGameState(t *testing.T) {
 }
 
 func TestNewGame(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name        string
 		word        *Word
@@ -199,6 +205,8 @@ func TestNewGame(t *testing.T) {
 }
 
 func TestPattern(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name           string
 		word           *Word
@@ -274,6 +282,8 @@ func TestPattern(t *testing.T) {
 }
 
 func TestGuess(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name             string
 		attempts         int
@@ -412,6 +422,8 @@ func TestGuess(t *testing.T) {
 }
 
 func TestIsWin(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name           string
 		attempts       int
@@ -513,6 +525,8 @@ func TestIsWin(t *testing.T) {
 }
 
 func TestIsLose(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name           string
 		attempts       int
@@ -584,6 +598,8 @@ func TestIsLose(t *testing.T) {
 }
 
 func TestIsFinished(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name           string
 		attempts       int

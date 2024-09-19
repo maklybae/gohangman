@@ -5,12 +5,16 @@ package infrastructure //nolint
 import (
 	"bufio"
 	"bytes"
+	"io"
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetLetter(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	tests := []struct {
 		name        string
 		input       string

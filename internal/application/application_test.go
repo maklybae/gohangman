@@ -1,6 +1,8 @@
 package application_test
 
 import (
+	"io"
+	"log"
 	"makly/hangman/internal/application"
 	applicationMocks "makly/hangman/internal/application/mocks"
 	"makly/hangman/internal/domain"
@@ -12,6 +14,8 @@ import (
 )
 
 func TestChoiceDifficulty(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	const iterations = 1000
 
 	difficultyCount := make(map[domain.Difficulty]int)
@@ -30,6 +34,8 @@ func TestChoiceDifficulty(t *testing.T) {
 }
 
 func TestChoiceCategory(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	const iterations = 1000
 
 	categories := []domain.Category{
@@ -61,6 +67,8 @@ func TestChoiceCategory(t *testing.T) {
 }
 
 func TestChoiceWord(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	rd := &application.RandomDefault{}
 
 	const iterations = 1000
@@ -179,6 +187,8 @@ func TestChoiceWord(t *testing.T) {
 }
 
 func TestRunGameSession(t *testing.T) {
+	log.SetOutput(io.Discard)
+
 	mockWordRandomizer := &applicationMocks.WordRandomizer{}
 	mockInputer := &domainMocks.GameInputer{}
 	mockOutputer := &domainMocks.GameOutputer{}
