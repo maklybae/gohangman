@@ -54,7 +54,8 @@ func main() {
 	outputer := infrastructure.NewConsoleOutput()
 
 	// Run game session
-	if err := application.RunGameSession(category, difficulty, maxMistakes, inputer, outputer); err != nil {
+	randDefault := &application.RandomDefault{}
+	if err := application.RunGameSession(category, difficulty, maxMistakes, inputer, outputer, randDefault); err != nil {
 		slog.Error("Game session error", slog.Any("error", err))
 		panic(err)
 	}

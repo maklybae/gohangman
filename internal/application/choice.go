@@ -7,6 +7,12 @@ import (
 	"math/big"
 )
 
+type WordRandomizer interface {
+	ChoiceWord(category *domain.Category, difficulty domain.Difficulty) (word *domain.Word, err error)
+}
+
+type RandomDefault struct{}
+
 func ChoiceDifficulty() (difficulty domain.Difficulty, err error) {
 	n, err := rand.Int(rand.Reader, big.NewInt(int64(domain.DifficultyCount)))
 	if err != nil {
@@ -25,7 +31,7 @@ func ChoiceCategory(categories []domain.Category) (category *domain.Category, er
 	return &categories[n.Int64()], nil
 }
 
-func ChoiceWord(category *domain.Category, difficulty domain.Difficulty) (word *domain.Word, err error) {
+func (rd *RandomDefault) ChoiceWord(category *domain.Category, difficulty domain.Difficulty) (word *domain.Word, err error) {
 	var words []domain.Word
 
 	switch difficulty {

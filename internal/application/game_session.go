@@ -13,8 +13,9 @@ func RunGameSession(
 	maxMistakes int,
 	inputer domain.GameInputer,
 	outputer domain.GameOutputer,
+	wordRandomizer WordRandomizer,
 ) (err error) {
-	word, err := ChoiceWord(category, difficulty)
+	word, err := wordRandomizer.ChoiceWord(category, difficulty)
 	if err != nil {
 		return fmt.Errorf("choice word: %w", err)
 	}
