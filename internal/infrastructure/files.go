@@ -30,15 +30,16 @@ type Reader interface {
 	io.Reader
 }
 
-func ReadCollection(jsonReader, schemaReader Reader) (wordsCollection *domain.WordsCollection, err error) {
-	jsonBytes, err := io.ReadAll(jsonReader)
-	if err != nil {
-		return nil, fmt.Errorf("read file: %w", err)
-	}
+type JSONBytesValidator interface {
+	ValidateJSONBytes(jsonBytes []byte, schemaReader Reader) (err error)
+}
 
+type Validator struct{}
+
+func (v *Validator) ValidateJSONBytes(jsonBytes []byte, schemaReader Reader) (err error) {
 	schemaBytes, err := io.ReadAll(schemaReader)
 	if err != nil {
-		return nil, fmt.Errorf("read schema file: %w", err)
+		return fmt.Errorf("read schema file: %w", err)
 	}
 
 	documentLoader := gojsonschema.NewBytesLoader(jsonBytes)
@@ -46,13 +47,26 @@ func ReadCollection(jsonReader, schemaReader Reader) (wordsCollection *domain.Wo
 
 	result, err := gojsonschema.Validate(schemaLoader, documentLoader)
 	if err != nil {
-		return nil, fmt.Errorf("json schema validation: %w", err)
+		return fmt.Errorf("json schema validation: %w", err)
 	}
 
 	slog.Info("Validate json schema", slog.Bool("bool result", result.Valid()))
 
 	if !result.Valid() {
-		return nil, &IncorrectJSONError{Message: "json schema is invalid", JSONErrors: result.Errors()}
+		return &IncorrectJSONError{Message: "json schema is invalid", JSONErrors: result.Errors()}
+	}
+
+	return nil
+}
+
+func ReadCollection(jsonReader, schemaReader Reader, validator JSONBytesValidator) (wordsCollection *domain.WordsCollection, err error) {
+	jsonBytes, err := io.ReadAll(jsonReader)
+	if err != nil {
+		return nil, fmt.Errorf("read file: %w", err)
+	}
+
+	if err := validator.ValidateJSONBytes(jsonBytes, schemaReader); err != nil {
+		return nil, fmt.Errorf("reading collection: %w", err)
 	}
 
 	err = json.Unmarshal(jsonBytes, &wordsCollection)
@@ -106,5 +120,5 @@ func ReadCollectionFromFile(jsonPath, schemaPath string) (wordsCollection *domai
 		slog.Info("Close json schema file", slog.String("path", schemaPath))
 	}()
 
-	return ReadCollection(jsonFile, schemaFile)
+	return ReadCollection(jsonFile, schemaFile, &Validator{})
 }
