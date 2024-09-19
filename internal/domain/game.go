@@ -1,6 +1,9 @@
 package domain
 
-import "log/slog"
+import (
+	"log/slog"
+	"strings"
+)
 
 type Game struct {
 	attempts       int
@@ -12,6 +15,8 @@ type Game struct {
 }
 
 func NewGame(word *Word, maxMistakes int) *Game {
+	word.Word = strings.ToLower(word.Word)
+
 	correctLetters := make(map[rune]bool)
 	used := make(map[rune]bool)
 
