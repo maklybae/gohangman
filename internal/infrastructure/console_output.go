@@ -58,21 +58,12 @@ func (c *ConsoleOutput) showPattern(pattern string) {
 }
 
 func (c *ConsoleOutput) clear() {
-	fmt.Printf("\033[1A")
-	fmt.Printf("\033[2K")
-	fmt.Printf("\0338")
-}
-
-func (c *ConsoleOutput) memorizeCursor() {
-	fmt.Printf("\0337")
+	fmt.Printf("\033[H")
+	fmt.Printf("\033[2J")
 }
 
 func (c *ConsoleOutput) ShowGame(game *domain.Game) {
-	if game.Attempts() != 0 {
-		c.clear()
-	}
-
-	c.memorizeCursor()
+	c.clear()
 
 	c.showAttempts(game.Attempts())
 	c.showMistakes(game.Mistakes(), game.MaxMistakes())
