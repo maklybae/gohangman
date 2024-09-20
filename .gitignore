@@ -31,3 +31,5 @@ bin
 .VSCodeCounter
 
 *.log
+
+.DS_STORE
