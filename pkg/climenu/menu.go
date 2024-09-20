@@ -12,6 +12,12 @@ const MenuIntroLines = 3
 
 type MenuItem string
 
+type MenuProvider interface {
+	RunMenu() (chosenIndex int, err error)
+	AddItem(label string)
+	LogValue() slog.Value
+}
+
 type Menu struct {
 	oneLineUserMessage string
 	position           int

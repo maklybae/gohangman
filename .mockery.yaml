@@ -10,3 +10,5 @@ packages:
     all: true
   makly/hangman/internal/application:
     all: true
+  makly/hangman/pkg/climenu:
+    all: true
