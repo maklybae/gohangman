@@ -21,8 +21,7 @@ func InitFlagsParameters() (path string, difficulty domain.Difficulty, maxMistak
 	return path, difficulty, maxMistakes
 }
 
-func ChooseDifficulty() (difficulty domain.Difficulty, err error) {
-	menu := climenu.NewMenu("Choose difficulty:")
+func ChooseDifficulty(menu climenu.MenuProvider) (difficulty domain.Difficulty, err error) {
 	menu.AddItem("Secret difficulty (difficulty will be chosen randomly)")
 	menu.AddItem(domain.EasyDifficulty.String())
 	menu.AddItem(domain.MediumDifficulty.String())
@@ -51,8 +50,7 @@ func ChooseDifficulty() (difficulty domain.Difficulty, err error) {
 	return domain.Difficulty(chosenIndex - 1), nil
 }
 
-func ChooseCategory(categories []domain.Category) (category *domain.Category, err error) {
-	menu := climenu.NewMenu("Choose category:")
+func ChooseCategory(categories []domain.Category, menu climenu.MenuProvider) (category *domain.Category, err error) {
 	menu.AddItem("Secret category (category will be chosen randomly)")
 
 	for _, category := range categories {
@@ -72,12 +70,12 @@ func ChooseCategory(categories []domain.Category) (category *domain.Category, er
 			return nil, fmt.Errorf("random choose category: %w", err)
 		}
 
-		slog.Info("Random chosen category", slog.String("category", categories[chosenIndex].Name))
+		slog.Info("Random chosen category", slog.String("category", category.Name))
 
 		return category, nil
 	}
 
-	slog.Info("Chosen category", slog.String("category", categories[chosenIndex].Name))
+	slog.Info("Chosen category", slog.String("category", categories[chosenIndex-1].Name))
 
 	return &categories[chosenIndex-1], nil
 }
@@ -111,13 +109,13 @@ func Init(defaultSamplePath, schemaPath string) (category *domain.Category, diff
 	slog.Info("Read words collection", slog.Any("words collection", wordsCollection))
 
 	if difficulty == domain.UnknownDifficulty {
-		difficulty, err = ChooseDifficulty()
+		difficulty, err = ChooseDifficulty(climenu.NewMenu("Choose difficulty:"))
 		if err != nil {
 			return nil, domain.UnknownDifficulty, -1, fmt.Errorf("start choose difficulty menu: %w", err)
 		}
 	}
 
-	category, err = ChooseCategory(wordsCollection.Categories)
+	category, err = ChooseCategory(wordsCollection.Categories, climenu.NewMenu("Choose category:"))
 	if err != nil {
 		return nil, domain.UnknownDifficulty, -1, fmt.Errorf("choose category: %w", err)
 	} else if category == nil || len(category.EasyWords)+len(category.MediumWords)+len(category.HardWords) == 0 {

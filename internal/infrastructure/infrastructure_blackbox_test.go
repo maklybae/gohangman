@@ -9,6 +9,7 @@ import (
 	"makly/hangman/internal/domain"
 	"makly/hangman/internal/infrastructure"
 	"makly/hangman/internal/infrastructure/mocks"
+	menuMocks "makly/hangman/pkg/climenu/mocks"
 	"os"
 	"testing"
 
@@ -428,4 +429,72 @@ func TestInitFlagsParameters(t *testing.T) {
 		assert.Equal(t, tt.expectedDifficulty, gotDifficulty)
 		assert.Equal(t, tt.expectedMaxMistakes, gotMaxMistakes)
 	}
+}
+
+func TestChooseDifficulty(t *testing.T) {
+	log.SetOutput(io.Discard)
+
+	assertInstance := assert.New(t)
+	mockMenu := &menuMocks.MenuProvider{}
+	mockMenu.On("AddItem", mock.Anything).Return()
+
+	mockMenu.On("RunMenu").Return(1, nil).Once()
+	difficulty, err := infrastructure.ChooseDifficulty(mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal(domain.EasyDifficulty, difficulty)
+
+	mockMenu.On("RunMenu").Return(2, nil).Once()
+	difficulty, err = infrastructure.ChooseDifficulty(mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal(domain.MediumDifficulty, difficulty)
+
+	mockMenu.On("RunMenu").Return(3, nil).Once()
+	difficulty, err = infrastructure.ChooseDifficulty(mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal(domain.HardDifficulty, difficulty)
+
+	mockMenu.On("RunMenu").Return(0, nil).Once()
+	difficulty, err = infrastructure.ChooseDifficulty(mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Contains([]domain.Difficulty{domain.EasyDifficulty, domain.MediumDifficulty, domain.HardDifficulty}, difficulty)
+}
+
+func TestChooseCategory(t *testing.T) {
+	log.SetOutput(io.Discard)
+
+	categories := []domain.Category{
+		{
+			Name: "Category1",
+		},
+		{
+			Name: "Category2",
+		},
+		{
+			Name: "Category3",
+		},
+	}
+
+	assertInstance := assert.New(t)
+	mockMenu := &menuMocks.MenuProvider{}
+	mockMenu.On("AddItem", mock.Anything).Return()
+
+	mockMenu.On("RunMenu").Return(1, nil).Once()
+	category, err := infrastructure.ChooseCategory(categories, mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal("Category1", category.Name)
+
+	mockMenu.On("RunMenu").Return(2, nil).Once()
+	category, err = infrastructure.ChooseCategory(categories, mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal("Category2", category.Name)
+
+	mockMenu.On("RunMenu").Return(3, nil).Once()
+	category, err = infrastructure.ChooseCategory(categories, mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Equal("Category3", category.Name)
+
+	mockMenu.On("RunMenu").Return(0, nil).Once()
+	category, err = infrastructure.ChooseCategory(categories, mockMenu)
+	assertInstance.NoError(err)
+	assertInstance.Contains([]string{"Category1", "Category2", "Category3"}, category.Name)
 }
