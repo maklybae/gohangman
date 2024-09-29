@@ -2,12 +2,14 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log/slog"
+	"os"
+	"path/filepath"
+
 	"makly/hangman/internal/application"
 	"makly/hangman/internal/infrastructure"
 	"makly/hangman/pkg/climenu"
-	"os"
-	"path/filepath"
 
 	"github.com/spf13/viper"
 )
@@ -19,20 +21,22 @@ func main() {
 	viper.SetConfigType("json")
 
 	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
+		fmt.Println("Error reading config file", err)
+		os.Exit(1)
 	}
 
 	// Initialize logger
 	absLogFilePath, err := filepath.Abs(viper.GetString("logPath"))
 	if err != nil {
-		panic(err)
+		fmt.Println("Error getting absolute path os logger", err)
+		os.Exit(1)
 	}
 
 	logFile, err := os.OpenFile(absLogFilePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error opening log file", err)
+		os.Exit(1)
 	}
-	defer logFile.Close()
 
 	logger := slog.New(slog.NewJSONHandler(logFile, &slog.HandlerOptions{AddSource: true}))
 	slog.SetDefault(logger)
@@ -47,7 +51,8 @@ func main() {
 		}
 
 		slog.Error("Initialization error", slog.Any("error", err))
-		panic(err)
+		logFile.Close()
+		os.Exit(1)
 	}
 
 	inputer := infrastructure.NewConsoleInput()
@@ -57,8 +62,10 @@ func main() {
 	randDefault := &application.RandomDefault{}
 	if err := application.RunGameSession(category, difficulty, maxMistakes, inputer, outputer, randDefault); err != nil {
 		slog.Error("Game session error", slog.Any("error", err))
-		panic(err)
+		logFile.Close()
+		os.Exit(1)
 	}
 
 	slog.Info("Game session ended", slog.String("reason", "success"))
+	logFile.Close()
 }
