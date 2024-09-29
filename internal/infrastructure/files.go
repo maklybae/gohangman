@@ -70,12 +70,18 @@ func ReadCollection(jsonReader, schemaReader Reader, validator JSONBytesValidato
 		return nil, fmt.Errorf("reading collection: %w", err)
 	}
 
-	err = json.Unmarshal(jsonBytes, &wordsCollection)
+	var wordsCollectionJSON *domain.WordsCollectionJSON
+
+	err = json.Unmarshal(jsonBytes, &wordsCollectionJSON)
 	if err != nil {
 		return nil, fmt.Errorf("unmarshal json: %w", err)
 	}
 
-	slog.Info("Unmarshal json", slog.Any("words collection", wordsCollection))
+	slog.Info("Unmarshal json")
+
+	wordsCollection = wordsCollectionJSON.ToDomain()
+
+	slog.Info("Convert json to domain", slog.Any("words collection", wordsCollection))
 
 	return wordsCollection, nil
 }
