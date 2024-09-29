@@ -4,9 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"log/slog"
-	"makly/hangman/internal/domain"
 	"os"
 	"unicode"
+
+	"makly/hangman/internal/domain"
 )
 
 type ConsoleInput struct {

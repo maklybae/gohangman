@@ -3,8 +3,9 @@ package application
 import (
 	"crypto/rand"
 	"fmt"
-	"makly/hangman/internal/domain"
 	"math/big"
+
+	"makly/hangman/internal/domain"
 )
 
 type WordRandomizer interface {

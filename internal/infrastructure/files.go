@@ -6,10 +6,11 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
-	"makly/hangman/internal/domain"
 	"os"
 
 	"github.com/xeipuuv/gojsonschema"
+
+	"makly/hangman/internal/domain"
 )
 
 type IncorrectJSONError struct {

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+
 	"makly/hangman/internal/domain"
 )
 

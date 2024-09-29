@@ -4,10 +4,11 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
+	"path/filepath"
+
 	"makly/hangman/internal/application"
 	"makly/hangman/internal/domain"
 	"makly/hangman/pkg/climenu"
-	"path/filepath"
 )
 
 func InitFlagsParameters() (path string, difficulty domain.Difficulty, maxMistakes int) {

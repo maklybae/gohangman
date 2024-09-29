@@ -3,14 +3,15 @@ package application_test
 import (
 	"io"
 	"log"
-	"makly/hangman/internal/application"
-	applicationMocks "makly/hangman/internal/application/mocks"
-	"makly/hangman/internal/domain"
-	domainMocks "makly/hangman/internal/domain/mocks"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+
+	"makly/hangman/internal/application"
+	applicationMocks "makly/hangman/internal/application/mocks"
+	"makly/hangman/internal/domain"
+	domainMocks "makly/hangman/internal/domain/mocks"
 )
 
 func TestChoiceDifficulty(t *testing.T) {

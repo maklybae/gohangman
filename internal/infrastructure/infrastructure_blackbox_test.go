@@ -6,15 +6,16 @@ import (
 	"flag"
 	"io"
 	"log"
-	"makly/hangman/internal/domain"
-	"makly/hangman/internal/infrastructure"
-	"makly/hangman/internal/infrastructure/mocks"
-	menuMocks "makly/hangman/pkg/climenu/mocks"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+
+	"makly/hangman/internal/domain"
+	"makly/hangman/internal/infrastructure"
+	"makly/hangman/internal/infrastructure/mocks"
+	menuMocks "makly/hangman/pkg/climenu/mocks"
 )
 
 const testStringSchema = `{

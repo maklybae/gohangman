@@ -3,9 +3,10 @@ package infrastructure
 import (
 	"fmt"
 	"log/slog"
+	"unicode"
+
 	"makly/hangman/internal/domain"
 	"makly/hangman/internal/draw"
-	"unicode"
 )
 
 type ConsoleOutput struct {
