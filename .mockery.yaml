@@ -1,5 +1,14 @@
 with-expecter: true
+dir: "{{.InterfaceDir}}/mocks"
 filename: "{{.InterfaceName | snakecase}}.go"
 mockname: "{{.InterfaceName | firstUpper}}"
 outpkg: mocks
 packages:
+  makly/hangman/internal/domain:
+    all: true
+  makly/hangman/internal/infrastructure:
+    all: true
+  makly/hangman/internal/application:
+    all: true
+  makly/hangman/pkg/climenu:
+    all: true

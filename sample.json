@@ -1,0 +1,411 @@
+{
+    "creator": "makly",
+    "description": "This is the main file that demonstrates the layout of JSON file",
+    "categories": [
+        {
+            "name": "Furniture",
+            "easy": [
+                {
+                    "word": "table",
+                    "hint": "A piece of furniture with a flat top and one or more legs, providing a level surface for eating, writing, or working at."
+                },
+                {
+                    "word": "chair",
+                    "hint": "A separate seat for one person, typically with a back and four legs."
+                },
+                {
+                    "word": "sofa",
+                    "hint": "A long upholstered seat with a back and arms, for two or more people."
+                },
+                {
+                    "word": "bed",
+                    "hint": "A piece of furniture for sleep or rest, typically a framework with a mattress."
+                },
+                {
+                    "word": "wardrobe",
+                    "hint": "A large, tall cupboard or recess in which clothes may be hung or stored."
+                },
+                {
+                    "word": "sideboard",
+                    "hint": "A flat-topped piece of furniture with cupboards and drawers, used for storing crockery, glasses, and table linen."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "bookshelf",
+                    "hint": "A shelf for holding books."
+                },
+                {
+                    "word": "dining table",
+                    "hint": "A table at which meals are served."
+                },
+                {
+                    "word": "coffee table",
+                    "hint": "A low table, typically placed in front of a sofa."
+                },
+                {
+                    "word": "dressing table",
+                    "hint": "A table with a mirror and drawers, used while dressing or applying makeup."
+                },
+                {
+                    "word": "stool",
+                    "hint": "A seat without a back or arms, typically resting on three or four legs or on a single pedestal."
+                },
+                {
+                    "word": "bench",
+                    "hint": "A long seat for several people, typically made of wood or stone."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "armchair",
+                    "hint": "A comfortable chair with side supports for a person's arms."
+                },
+                {
+                    "word": "ottoman",
+                    "hint": "A low upholstered seat, or footstool, without a back or arms that typically serves also as a box, with the seat hinged to form a lid."
+                },
+                {
+                    "word": "chaise longue",
+                    "hint": "A long chair for reclining, with a back and a single armrest."
+                },
+                {
+                    "word": "futon",
+                    "hint": "A mattress, originally Japanese, that can be rolled up or folded and put in a closet."
+                },
+                {
+                    "word": "rocking chair",
+                    "hint": "A chair mounted on rockers or springs, so as to rock to and fro."
+                },
+                {
+                    "word": "folding chair",
+                    "hint": "A chair that folds up for easy storage."
+                }
+            ]
+        },
+        {
+            "name": "Electronics",
+            "easy": [
+                {
+                    "word": "phone",
+                    "hint": "A portable electronic device for making telephone calls."
+                },
+                {
+                    "word": "laptop",
+                    "hint": "A small, portable personal computer."
+                },
+                {
+                    "word": "tablet",
+                    "hint": "A portable computer that uses a touchscreen as its primary input device."
+                },
+                {
+                    "word": "camera",
+                    "hint": "A device for recording visual images in the form of photographs, film, or video signals."
+                },
+                {
+                    "word": "headphones",
+                    "hint": "A pair of small loudspeaker drivers worn on or around the head over a user's ears."
+                },
+                {
+                    "word": "smartwatch",
+                    "hint": "A wearable computing device that closely resembles a wristwatch or other time-keeping device."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "printer",
+                    "hint": "A machine for printing text or pictures onto paper."
+                },
+                {
+                    "word": "router",
+                    "hint": "A device that forwards data packets between computer networks."
+                },
+                {
+                    "word": "monitor",
+                    "hint": "An output device that displays information in pictorial form."
+                },
+                {
+                    "word": "keyboard",
+                    "hint": "A panel of keys that operate a computer or typewriter."
+                },
+                {
+                    "word": "mouse",
+                    "hint": "A hand-held pointing device that detects two-dimensional motion relative to a surface."
+                },
+                {
+                    "word": "speaker",
+                    "hint": "A device that converts electrical signals into sound."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "projector",
+                    "hint": "An optical device that projects an image onto a surface."
+                },
+                {
+                    "word": "scanner",
+                    "hint": "A device that scans documents and converts them into digital data."
+                },
+                {
+                    "word": "microphone",
+                    "hint": "An instrument for converting sound waves into electrical energy variations."
+                },
+                {
+                    "word": "drone",
+                    "hint": "An unmanned aerial vehicle (UAV) that can be remotely controlled or fly autonomously."
+                },
+                {
+                    "word": "VR headset",
+                    "hint": "A head-mounted device that provides virtual reality for the wearer."
+                },
+                {
+                    "word": "game console",
+                    "hint": "A device that outputs a video signal or visual image to display a video game."
+                }
+            ]
+        },
+        {
+            "name": "Kitchen",
+            "easy": [
+                {
+                    "word": "spoon",
+                    "hint": "A utensil consisting of a small, shallow bowl on a handle, used for eating, stirring, and serving food."
+                },
+                {
+                    "word": "fork",
+                    "hint": "A utensil with two or more prongs, used for lifting food to the mouth or holding it when cutting."
+                },
+                {
+                    "word": "knife",
+                    "hint": "A utensil with a blade and handle, used for cutting or as a weapon."
+                },
+                {
+                    "word": "plate",
+                    "hint": "A flat dish, typically circular and made of china, from which food is eaten or served."
+                },
+                {
+                    "word": "cup",
+                    "hint": "A small bowl-shaped container for drinking from, typically having a handle."
+                },
+                {
+                    "word": "bowl",
+                    "hint": "A round, deep dish or basin used for food or liquid."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "blender",
+                    "hint": "An electric mixing machine used in food preparation for liquefying, chopping, or pureeing."
+                },
+                {
+                    "word": "toaster",
+                    "hint": "An electrical device for making toast."
+                },
+                {
+                    "word": "microwave",
+                    "hint": "An electric oven that heats and cooks food by exposing it to electromagnetic radiation."
+                },
+                {
+                    "word": "kettle",
+                    "hint": "A container or device in which water is boiled, having a lid, spout, and handle."
+                },
+                {
+                    "word": "oven",
+                    "hint": "An enclosed compartment, usually part of a cooker, for cooking and heating food."
+                },
+                {
+                    "word": "fridge",
+                    "hint": "A large container that uses electricity to keep food cold."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "dishwasher",
+                    "hint": "A machine for washing dishes automatically."
+                },
+                {
+                    "word": "food processor",
+                    "hint": "An electric kitchen appliance used for chopping, mixing, or pureeing foods."
+                },
+                {
+                    "word": "pressure cooker",
+                    "hint": "A pot that cooks food quickly under steam pressure."
+                },
+                {
+                    "word": "slow cooker",
+                    "hint": "An electric cooking pot that cooks food at a low temperature over a long period."
+                },
+                {
+                    "word": "stand mixer",
+                    "hint": "A stationary electric mixer for mixing ingredients."
+                },
+                {
+                    "word": "air fryer",
+                    "hint": "A kitchen appliance that cooks by circulating hot air around the food."
+                }
+            ]
+        },
+        {
+            "name": "Vehicles",
+            "easy": [
+                {
+                    "word": "car",
+                    "hint": "A road vehicle, typically with four wheels, powered by an internal combustion engine or electric motor."
+                },
+                {
+                    "word": "bike",
+                    "hint": "A two-wheeled vehicle that is powered by pedaling."
+                },
+                {
+                    "word": "bus",
+                    "hint": "A large motor vehicle carrying passengers by road, typically one serving the public on a fixed route and for a fare."
+                },
+                {
+                    "word": "truck",
+                    "hint": "A motor vehicle designed to transport cargo."
+                },
+                {
+                    "word": "scooter",
+                    "hint": "A two-wheeled vehicle that is powered by a motor and has a step-through frame."
+                },
+                {
+                    "word": "van",
+                    "hint": "A medium-sized motor vehicle with a boxy shape and high roof, used for transporting goods or passengers."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "motorcycle",
+                    "hint": "A two-wheeled motor vehicle that is powered by an engine."
+                },
+                {
+                    "word": "tractor",
+                    "hint": "A powerful motor vehicle with large rear wheels, used chiefly on farms for hauling equipment and trailers."
+                },
+                {
+                    "word": "ambulance",
+                    "hint": "A vehicle equipped for taking sick or injured people to and from the hospital."
+                },
+                {
+                    "word": "fire truck",
+                    "hint": "A vehicle equipped for firefighting."
+                },
+                {
+                    "word": "police car",
+                    "hint": "A vehicle used by police officers for transportation."
+                },
+                {
+                    "word": "minivan",
+                    "hint": "A small van, typically one fitted with seats for passengers."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "bulldozer",
+                    "hint": "A powerful track-laying tractor with caterpillar tracks and a broad curved upright blade at the front for clearing ground."
+                },
+                {
+                    "word": "excavator",
+                    "hint": "A large machine for digging and moving earth."
+                },
+                {
+                    "word": "forklift",
+                    "hint": "A vehicle with a pronged device in front for lifting and carrying heavy loads."
+                },
+                {
+                    "word": "cement mixer",
+                    "hint": "A machine with a revolving drum used for mixing cement with sand, gravel, and water to produce concrete."
+                },
+                {
+                    "word": "snowplow",
+                    "hint": "A vehicle or device for removing snow from roads or railways."
+                },
+                {
+                    "word": "garbage truck",
+                    "hint": "A truck specially designed to collect municipal solid waste and transport it to a solid waste treatment facility."
+                }
+            ]
+        },
+        {
+            "name": "Animals",
+            "easy": [
+                {
+                    "word": "cat",
+                    "hint": "A small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws."
+                },
+                {
+                    "word": "dog",
+                    "hint": "A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, and a barking, howling, or whining voice."
+                },
+                {
+                    "word": "cow",
+                    "hint": "A fully grown female animal of a domesticated breed of ox, kept to produce milk or beef."
+                },
+                {
+                    "word": "sheep",
+                    "hint": "A domesticated ruminant animal with a thick woolly coat and (typically only in the male) curving horns."
+                },
+                {
+                    "word": "horse",
+                    "hint": "A large plant-eating domesticated mammal with solid hoofs and a flowing mane and tail, used for riding, racing, and to carry and pull loads."
+                },
+                {
+                    "word": "pig",
+                    "hint": "An omnivorous domesticated hoofed mammal with sparse bristly hair and a flat snout for rooting in the soil."
+                }
+            ],
+            "medium": [
+                {
+                    "word": "elephant",
+                    "hint": "A large herbivorous mammal with a trunk, long curved ivory tusks, and large ears, native to Africa and southern Asia."
+                },
+                {
+                    "word": "giraffe",
+                    "hint": "A large African mammal with a very long neck and forelegs, having a coat patterned with brown patches separated by lighter lines."
+                },
+                {
+                    "word": "kangaroo",
+                    "hint": "A large plant-eating marsupial with a long powerful tail and strongly developed hind limbs that enable it to travel by leaping."
+                },
+                {
+                    "word": "panda",
+                    "hint": "A large bearlike mammal with characteristic black-and-white markings, native to certain mountain forests in China."
+                },
+                {
+                    "word": "zebra",
+                    "hint": "An African wild horse with black-and-white stripes and an erect mane."
+                },
+                {
+                    "word": "lion",
+                    "hint": "A large tawny-colored cat that lives in prides, found in Africa and northwestern India."
+                }
+            ],
+            "hard": [
+                {
+                    "word": "platypus",
+                    "hint": "A small, aquatic, egg-laying mammal with a broad, flat tail, webbed feet, and a snout resembling a duck's bill."
+                },
+                {
+                    "word": "narwhal",
+                    "hint": "A small Arctic whale, the male of which has a long forward-pointing spirally twisted tusk developed from one of its teeth."
+                },
+                {
+                    "word": "axolotl",
+                    "hint": "A Mexican salamander that retains its larval features throughout its life."
+                },
+                {
+                    "word": "aardvark",
+                    "hint": "A nocturnal burrowing mammal with long ears, a tubular snout, and a long extensible tongue, feeding on ants and termites."
+                },
+                {
+                    "word": "quokka",
+                    "hint": "A small wallaby with a short tail and a friendly appearance, native to some small islands off the coast of Western Australia."
+                },
+                {
+                    "word": "okapi",
+                    "hint": "A large browsing mammal of the giraffe family that lives in the rainforests of the Congo."
+                }
+            ]
+        }
+    ]
+}
